@@ -3,9 +3,8 @@
         <!-- header -->
         <AppHeader @searchEvents="filterResearch($event)"/>
         <!-- /header -->
-
         <!-- main -->
-        <AppMain :cardList="searchMovies"/>
+        <AppMain :cardMovieList="searchMovies" :cardSeriesList="searchSeries"/>
         <!-- /main -->
     </div>
 </template>
@@ -24,18 +23,30 @@ export default {
   },
   data() {
     return {
-      searchMovies: []
+      searchMovies: [],
+      searchSeries: [],
     }
   },
   methods: {
     filterResearch(searchWord) {
-      axios.get("https://api.themoviedb.org/3/search/movie?api_key=2446d8ad240c37a38739ddeb5eba1083&query=" + searchWord)
+      axios.get("https://api.themoviedb.org/3/search/movie?api_key=2446d8ad240c37a38739ddeb5eba1083&query=" + searchWord) 
       .then((resp) => {
         this.searchMovies = resp.data.results;
-      })
+        this.searchMovies.forEach(element => {
+          this.searchMovies.push(element)
+        });
+      });
+      axios.get("https://api.themoviedb.org/3/search/tv?api_key=2446d8ad240c37a38739ddeb5eba1083&query=" + searchWord)
+      .then((resp) => {
+        this.searchSeries = resp.data.results;
+        this.searchSeries.forEach(element => {
+          this.searchSeries.push(element)
+        });
+      });
     }
-  }
+  } 
 }
+
 </script>
 
 <style lang="scss">

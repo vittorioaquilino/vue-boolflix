@@ -2,7 +2,28 @@
   <section class="ms_container">
       <div 
       class="movie-card text-center"
-      v-for="(element, index) in cardList"
+      v-for="(element, index) in cardMovieList"
+      :key="index"
+      @mouseover="hoverOn"
+      @mouseleave="hoverOff"
+      >
+        <img 
+        :src="img + element.poster_path" 
+        class="card-image"
+        v-if="hover == false">
+        <div class="card-hover" v-if="hover">
+            <div>Titolo originale: {{ element.original_title }}</div>
+            <div>
+                Lingua: {{ element.original_language }}
+                <img :src="isLanguage(element)" alt="">
+            </div>
+            <div>Titolo: {{ element.title }}</div>
+            <div>Voto: {{ element.vote_average }}/10</div>
+        </div>
+      </div>
+      <!-- <div 
+      class="series-card text-center"
+      v-for="(element, index) in cardSeriesList"
       :key="index"
       >
         <div>Titolo originale: {{ element.original_title }}</div>
@@ -12,7 +33,7 @@
         </div>
         <div>Titolo: {{ element.title }}</div>
         <div>Voto: {{ element.vote_average }}/10</div>
-      </div>
+      </div> -->
   </section>
 </template>
 
@@ -24,10 +45,16 @@ export default {
             italiaFlag: require("../assets/img/italia-flag.jpg"),
             inghilterraFlag: require("../assets/img/inghilterra-flag.jpg"),
             germaniaFlag: require("../assets/img/germania-flag.jpg"),
-            franciaFlag: require("../assets/img/francia-flag.jpg")
+            franciaFlag: require("../assets/img/francia-flag.jpg"),
+            globalFlag: require("../assets/img/global.jpg"),
+            img: "http://image.tmdb.org/t/p/w342/",
+            hover: false
         };
     },
-    props: ["cardList"],
+    props: {
+        cardMovieList: Array,
+        cardSeriesList: Array,
+    },
     methods: {
         isLanguage(element) {
             if (element.original_language === "it") {
@@ -38,7 +65,15 @@ export default {
                 return this.germaniaFlag;
             } else if (element.original_language === "fr") {
                 return this.franciaFlag;
+            } else {
+                return this.globalFlag;
             }
+        },
+        hoverOn() {
+            this.hover = true
+        },
+        hoverOff() {
+            this.hover = false
         }
     }
 }
@@ -53,8 +88,10 @@ export default {
     display: flex;
     flex-wrap: wrap;
 }
-.movie-card {
+.movie-card,
+.series-card {
     width: calc(100% / 4 - 20px);
+    height: 400px;
     margin: 10px;
     border: 2px solid $brand-title-color;
     border-radius: 5px;
@@ -66,7 +103,13 @@ export default {
         height: 15px;
         border-radius: 5px;
     }
+
+    .card-image {
+        width: 100%;
+        height: 400px;
+    } 
 }
+
 
 
 </style>
