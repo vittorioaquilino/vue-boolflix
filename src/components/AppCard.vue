@@ -11,7 +11,7 @@
         <div class="card-hover" v-if="hover">
             <div>
                 <span>Titolo originale:</span> 
-                {{ card.original_title }} {{ card.original_name }}
+                {{ cardOriginalTitle }}
             </div>
             <div>
                 <span>Lingua:</span>
@@ -20,7 +20,7 @@
             </div>
             <div>
                 <span>Titolo:</span> 
-                {{ card.title }} {{ card.name }}
+                {{ cardTitle }} 
             </div>
             <div>
                 <span>Voto:</span> 
@@ -58,6 +58,14 @@ export default {
             img: "http://image.tmdb.org/t/p/w342/",
             hover: false
         };
+    },
+    computed: {
+        cardTitle() {
+            return this.card.title ? this.card.title : this.card.name;
+        },
+        cardOriginalTitle() {
+            return this.card.original_title ? this.card.original_title : this.card.original_name;
+        }
     },
     props: {
         card: Object,
