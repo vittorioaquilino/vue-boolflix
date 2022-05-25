@@ -29,11 +29,6 @@ export default {
             searchWord: "",
         }
     },
-    methods: {
-        searchMovieOrSeries () {
-            return console.log("film o serie tv");
-        }
-    },
 }
 </script>
 

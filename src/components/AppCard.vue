@@ -103,9 +103,8 @@ export default {
     overflow-y: scroll;
 
     img {
-        width: 15px;
+        width: 25px;
         height: 15px;
-        border-radius: 5px;
     }
 
     .card-image {
